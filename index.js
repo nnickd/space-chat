@@ -1,6 +1,7 @@
 var app = require('express')();
+var axios = require('axios');
 var bodyParser = require('body-parser')
-var jsonParser = bodyParser.json()
+var jsonParser = bodyParser.json();
 var http = require('http').createServer(app);
 // var io = require('socket.io')(http);
 
@@ -48,23 +49,18 @@ var nums = [];
 for (i = 1; i <= 100; i++) {
     if (foundRoutes > maxRoutesFound) {
         return;
-    } else {
-        http.post('https://superspacechat.herokuapp.com/api/chat', {message: `${message} : ${nums.join(', ')}`})
-    }
-    try {
-        http.get(`https://superspacechat.herokuapp.com/api/${i}`, function (req, res) {
-            if (req && req.body && req.body.message) {
-                message += req.body.message;
-                nums.push(i);
-                foundRoutes += 1;
-            }
-        });
-    } catch {
-        continue;
-    }
+    } 
+    axios.get(`https://superspacechat.herokuapp.com/api/${i}`).then(function (req) {
+        message += req.body.message;
+        console.log(message)
+        nums.push(i);
+        foundRoutes += 1;
+    }).catch(error => true);
 
 }
 
+console.log(`${message} : ${nums.join(', ')}`)
+axios.post('https://superspacechat.herokuapp.com/api/chat', { message: `${message} : ${nums.join(', ')}` })
 
 // io.on('connection', function (socket) {
 //     console.log('a user connected');
