@@ -1,4 +1,6 @@
 var app = require('express')();
+var bodyParser = require('body-parser')
+var jsonParser = bodyParser.json()
 // var http = require('http').createServer(app);
 // var io = require('socket.io')(http);
 
@@ -8,8 +10,8 @@ app.get('/', function (req, res) {
     res.sendFile(__dirname + '/index.html');
 });
 
-app.post('/api/chat', function (req, res) {
-    console.log(req.toString());
+app.post('/api/chat', jsonParser, function (req, res) {
+    console.log(req.body.message);
 });
 
 // io.on('connection', function (socket) {
