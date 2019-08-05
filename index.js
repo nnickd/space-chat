@@ -42,25 +42,21 @@ app.listen(port, function () {
     console.log(`listening on *:${port}`);
 });
 
-var maxRoutesFound = 3;
-var foundRoutes = 0;
-var message = '';
-var nums = [];
+var messages = [];
 for (i = 1; i <= 100; i++) {
-    if (foundRoutes > maxRoutesFound) {
-        return;
-    } 
+    if (messages.length > 3) { return; } 
     axios.get(`https://superspacechat.herokuapp.com/api/${i}`).then(function (req) {
-        message += req.body.message;
-        console.log(message)
-        nums.push(i);
-        foundRoutes += 1;
+        messages.push(req.body.message)
+        console.log(messages)
     }).catch(error => true);
-
 }
 
-console.log(`${message} : ${nums.join(', ')}`)
-axios.post('https://superspacechat.herokuapp.com/api/chat', { message: `${message} : ${nums.join(', ')}` })
+var message = messages.join(' ');
+console.log(message);
+
+if (messages.length > 0) {
+    axios.post('https://superspacechat.herokuapp.com/api/chat', { 'message': message })
+} 
 
 // io.on('connection', function (socket) {
 //     console.log('a user connected');
