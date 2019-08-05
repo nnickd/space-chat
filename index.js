@@ -11,7 +11,7 @@ app.get('/', function (req, res) {
 });
 
 app.post('/api/chat', jsonParser, function (req, res) {
-    console.log(req.body.message);
+    console.log(req.body);
 });
 
 // io.on('connection', function (socket) {
