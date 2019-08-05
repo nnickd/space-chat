@@ -3,7 +3,9 @@
 
 <head>
     <title>Socket.IO chat</title>
-    <!-- <style>
+
+
+    <style>
         * {
             margin: 0;
             padding: 0;
@@ -49,31 +51,33 @@
         #messages li:nth-child(odd) {
             background: #eee;
         }
-    </style> -->
-    <!-- <script src="/socket.io/socket.io.js"></script> -->
-    <!-- <script src="https://code.jquery.com/jquery-1.11.1.js"></script> -->
-    <!-- <script>
-    $(function () {
-        var socket = io();
-        $('form').submit(function (e) {
-            e.preventDefault(); // prevents page reloading
-                    socket.emit('chat message', $('#m').val());
-                    $('#m').val('');
-                    return false;
-                });
-                socket.on('chat message', function (msg) {
-                    $('#messages').append($('<li>').text(msg));
-                });
-            });
-    </script> -->
+    </style>
+    <script src="https://code.jquery.com/jquery-1.11.1.js"></script>
 </head>
 
 <body>
-    <!-- <ul id="messages"></ul>
+    <ul id="messages"></ul>
     <form action="">
         <input id="m" autocomplete="off" />
         <button>Send</button>
-    </form> -->
+    </form>
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+        $(function () {
+            debugger;
+            var socket = io();
+            $('form').submit(function (e) {
+                e.preventDefault(); // prevents page reloading
+                socket.emit('chat message', $('#m').val());
+                $('#m').val('');
+                return false;
+            });
+            socket.on('chat message', function (msg) {
+                $('#messages').append($('<li>').text(msg));
+            });
+        });
+    </script>
 </body>
 
 </html>
